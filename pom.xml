@@ -27,6 +27,7 @@
         <module>demo-netty-1-08</module>
         <module>demo-netty-1-09</module>
         <module>demo-netty-1-10</module>
+        <module>demo-netty-1-11</module>
     </modules>
 
     <dependencies>
