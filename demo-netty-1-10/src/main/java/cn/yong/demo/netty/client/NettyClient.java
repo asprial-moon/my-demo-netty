@@ -8,11 +8,11 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * @author Allen
+ * @author Line
+ * @desc
  * @date 2022/9/21
  */
 public class NettyClient {
-
     public static void main(String[] args) {
         new NettyClient().connect("127.0.0.1", 7397);
     }

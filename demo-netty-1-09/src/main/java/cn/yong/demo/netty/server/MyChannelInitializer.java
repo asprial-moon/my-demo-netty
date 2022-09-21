@@ -13,9 +13,9 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
  */
 public class MyChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
-    protected void initChannel(SocketChannel channel) throws Exception {
+    protected void initChannel(SocketChannel channel) {
         // 基于换行符号
-        channel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+//        channel.pipeline().addLast(new LineBasedFrameDecoder(1024));
         // 解码转String，注意调整自己的编码格式GBK、UTF-8
         channel.pipeline().addLast(new MyDecoder());
         // 编码转String，注意调整自己的编码格式GBK、UTF-8
