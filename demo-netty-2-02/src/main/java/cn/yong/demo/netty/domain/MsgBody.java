@@ -77,14 +77,14 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
+    return cn.yong.demo.netty.domain.MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
   }
 
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_fieldAccessorTable
+    return cn.yong.demo.netty.domain.MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            MsgBody.class, Builder.class);
+            cn.yong.demo.netty.domain.MsgBody.class, cn.yong.demo.netty.domain.MsgBody.Builder.class);
   }
 
   public static final int CHANNELID_FIELD_NUMBER = 1;
@@ -197,10 +197,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof MsgBody)) {
+    if (!(obj instanceof cn.yong.demo.netty.domain.MsgBody)) {
       return super.equals(obj);
     }
-    MsgBody other = (MsgBody) obj;
+    cn.yong.demo.netty.domain.MsgBody other = (cn.yong.demo.netty.domain.MsgBody) obj;
 
     boolean result = true;
     result = result && getChannelId()
@@ -227,69 +227,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static MsgBody parseFrom(byte[] data)
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static MsgBody parseFrom(java.io.InputStream input)
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static MsgBody parseDelimitedFrom(java.io.InputStream input)
+  public static cn.yong.demo.netty.domain.MsgBody parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static MsgBody parseDelimitedFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static MsgBody parseFrom(
+  public static cn.yong.demo.netty.domain.MsgBody parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -301,7 +301,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(MsgBody prototype) {
+  public static Builder newBuilder(cn.yong.demo.netty.domain.MsgBody prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -321,17 +321,17 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:cn.yong.demo.netty.domain.MsgBody)
-          MsgBodyOrBuilder {
+      cn.yong.demo.netty.domain.MsgBodyOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
+      return cn.yong.demo.netty.domain.MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
     }
 
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_fieldAccessorTable
+      return cn.yong.demo.netty.domain.MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              MsgBody.class, Builder.class);
+              cn.yong.demo.netty.domain.MsgBody.class, cn.yong.demo.netty.domain.MsgBody.Builder.class);
     }
 
     // Construct using cn.yong.demo.netty.domain.MsgBody.newBuilder()
@@ -360,23 +360,23 @@ private static final long serialVersionUID = 0L;
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
+      return cn.yong.demo.netty.domain.MsgInfo.internal_static_org_itstack_demo_netty_domain_MsgBody_descriptor;
     }
 
-    public MsgBody getDefaultInstanceForType() {
-      return MsgBody.getDefaultInstance();
+    public cn.yong.demo.netty.domain.MsgBody getDefaultInstanceForType() {
+      return cn.yong.demo.netty.domain.MsgBody.getDefaultInstance();
     }
 
-    public MsgBody build() {
-      MsgBody result = buildPartial();
+    public cn.yong.demo.netty.domain.MsgBody build() {
+      cn.yong.demo.netty.domain.MsgBody result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public MsgBody buildPartial() {
-      MsgBody result = new MsgBody(this);
+    public cn.yong.demo.netty.domain.MsgBody buildPartial() {
+      cn.yong.demo.netty.domain.MsgBody result = new cn.yong.demo.netty.domain.MsgBody(this);
       result.channelId_ = channelId_;
       result.msgInfo_ = msgInfo_;
       onBuilt();
@@ -410,16 +410,16 @@ private static final long serialVersionUID = 0L;
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof MsgBody) {
-        return mergeFrom((MsgBody)other);
+      if (other instanceof cn.yong.demo.netty.domain.MsgBody) {
+        return mergeFrom((cn.yong.demo.netty.domain.MsgBody)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(MsgBody other) {
-      if (other == MsgBody.getDefaultInstance()) return this;
+    public Builder mergeFrom(cn.yong.demo.netty.domain.MsgBody other) {
+      if (other == cn.yong.demo.netty.domain.MsgBody.getDefaultInstance()) return this;
       if (!other.getChannelId().isEmpty()) {
         channelId_ = other.channelId_;
         onChanged();
@@ -441,11 +441,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      MsgBody parsedMessage = null;
+      cn.yong.demo.netty.domain.MsgBody parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (MsgBody) e.getUnfinishedMessage();
+        parsedMessage = (cn.yong.demo.netty.domain.MsgBody) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -607,12 +607,12 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:cn.yong.demo.netty.domain.MsgBody)
-  private static final MsgBody DEFAULT_INSTANCE;
+  private static final cn.yong.demo.netty.domain.MsgBody DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new MsgBody();
+    DEFAULT_INSTANCE = new cn.yong.demo.netty.domain.MsgBody();
   }
 
-  public static MsgBody getDefaultInstance() {
+  public static cn.yong.demo.netty.domain.MsgBody getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -635,7 +635,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  public MsgBody getDefaultInstanceForType() {
+  public cn.yong.demo.netty.domain.MsgBody getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 
