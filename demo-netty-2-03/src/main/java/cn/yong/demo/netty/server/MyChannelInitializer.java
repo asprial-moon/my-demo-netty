@@ -3,6 +3,7 @@ package cn.yong.demo.netty.server;
 import cn.yong.demo.netty.codec.ObjDecoder;
 import cn.yong.demo.netty.codec.ObjEncoder;
 import cn.yong.demo.netty.domain.MsgInfo;
+import cn.yong.demo.netty.domain.UserInfo;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;

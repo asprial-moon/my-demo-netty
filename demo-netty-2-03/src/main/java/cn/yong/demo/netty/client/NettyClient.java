@@ -1,5 +1,7 @@
 package cn.yong.demo.netty.client;
 
+import cn.yong.demo.netty.domain.MsgInfo;
+import cn.yong.demo.netty.domain.UserInfo;
 import cn.yong.demo.netty.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -35,6 +37,9 @@ public class NettyClient {
             f.channel().writeAndFlush(MsgUtil.buildMsg(f.channel().id().toString(),"你好，使用protobuf通信格式的服务端，我是https://bugstack.cn博主，付政委。这是我的公众号<bugstack虫洞栈>，关注我获取案例源码。"));
             f.channel().writeAndFlush(MsgUtil.buildMsg(f.channel().id().toString(),"你好，使用protobuf通信格式的服务端，我是https://bugstack.cn博主，付政委。这是我的公众号<bugstack虫洞栈>，关注我获取案例源码。"));
             f.channel().writeAndFlush(MsgUtil.buildMsg(f.channel().id().toString(),"你好，使用protobuf通信格式的服务端，我是https://bugstack.cn博主，付政委。这是我的公众号<bugstack虫洞栈>，关注我获取案例源码。"));
+            f.channel().writeAndFlush(MsgUtil.buildMsg(f.channel().id().toString(),"你好，使用protobuf通信格式的服务端，我是https://bugstack.cn博主，付政委。这是我的公众号<bugstack虫洞栈>，关注我获取案例源码。"));
+
+            f.channel().writeAndFlush(new UserInfo("小郭郭", 24, "女", "安远县世纪豪苑", "安远县第七幼儿园"));
 
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
