@@ -1,8 +1,10 @@
 package cn.yong.demo.netty.client;
 
 import cn.yong.demo.netty.domain.Constants;
+import cn.yong.demo.netty.domain.FileBurstData;
 import cn.yong.demo.netty.domain.FileBurstInstruct;
 import cn.yong.demo.netty.domain.FileTransferProtocol;
+import cn.yong.demo.netty.util.FileUtil;
 import cn.yong.demo.netty.util.MsgUtil;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
@@ -29,9 +31,6 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println("链接报告IP:" + channel.localAddress().getHostString());
         System.out.println("链接报告Port:" + channel.localAddress().getPort());
         System.out.println("链接报告完毕");
-        //通知客户端链接建立成功
-        String str = "通知服务端链接建立成功" + " " + new Date() + " " + channel.localAddress().getHostString();
-        ctx.writeAndFlush(MsgUtil.buildMsg(channel.id().toString(), str));
     }
 
     /**
@@ -41,6 +40,7 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("断开连接" + ctx.channel().localAddress().toString());
         super.channelInactive(ctx);
     }
 
@@ -63,8 +63,19 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
                     System.exit(-1);
                     return;
                 }
-
+                FileBurstData fileBurstData = FileUtil.readFile(fileBurstInstruct.getClientFileUrl(), fileBurstInstruct.getReadPosition());
+                ctx.writeAndFlush(MsgUtil.buildTransferData(fileBurstData));
+                System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " bugstack虫洞栈客户端传输文件信息。 FILE：" + fileBurstData.getFileName() + " SIZE(byte)：" + (fileBurstData.getEndPos() - fileBurstData.getBeginPos()));
+                break;
+            default:
+                break;
         }
+
+        // 模拟传输过程中断，场景测试可以注释掉
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " bugstack虫洞栈客户端传输文件信息[主动断开链接，模拟断点续传]");
+//        ctx.flush();
+//        ctx.close();
+//        System.exit(-1);
     }
 
     /**

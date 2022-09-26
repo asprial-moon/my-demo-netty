@@ -2,6 +2,7 @@ package cn.yong.demo.netty.server;
 
 import cn.yong.demo.netty.codec.ObjDecoder;
 import cn.yong.demo.netty.codec.ObjEncoder;
+import cn.yong.demo.netty.domain.FileTransferProtocol;
 import cn.yong.demo.netty.domain.MsgInfo;
 import cn.yong.demo.netty.domain.UserInfo;
 import io.netty.channel.ChannelInitializer;
@@ -27,8 +28,8 @@ public class MyChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel channel) {
         // 对象处理方法
-        channel.pipeline().addLast(new ObjDecoder(MsgInfo.class));
-        channel.pipeline().addLast(new ObjEncoder(MsgInfo.class));
+        channel.pipeline().addLast(new ObjDecoder(FileTransferProtocol.class));
+        channel.pipeline().addLast(new ObjEncoder(FileTransferProtocol.class));
         // 在管道中添加我们我们自己的接收数据实现方法
         channel.pipeline().addLast(new MyServerHandler());
     }
