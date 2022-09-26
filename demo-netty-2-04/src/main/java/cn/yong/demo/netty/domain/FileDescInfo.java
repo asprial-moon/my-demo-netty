@@ -8,7 +8,7 @@ package cn.yong.demo.netty.domain;
 public class FileDescInfo {
     private String fileUrl;
     private String fileName;
-    private String fileSize;
+    private Long fileSize;
 
     public String getFileUrl() {
         return fileUrl;
@@ -26,11 +26,11 @@ public class FileDescInfo {
         this.fileName = fileName;
     }
 
-    public String getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 }

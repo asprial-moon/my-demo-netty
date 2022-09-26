@@ -19,6 +19,13 @@ public class FileBurstInstruct {
      */
     private Integer readPosition;
 
+    public FileBurstInstruct() {
+    }
+
+    public FileBurstInstruct(Integer status) {
+        this.status = status;
+    }
+
     public Integer getStatus() {
         return status;
     }

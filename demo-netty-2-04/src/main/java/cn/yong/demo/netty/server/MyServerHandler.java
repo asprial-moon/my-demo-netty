@@ -1,6 +1,8 @@
 package cn.yong.demo.netty.server;
 
-
+import cn.yong.demo.netty.domain.*;
+import cn.yong.demo.netty.util.CacheUtil;
+import cn.yong.demo.netty.util.FileUtil;
 import cn.yong.demo.netty.util.MsgUtil;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,7 +11,6 @@ import io.netty.channel.socket.SocketChannel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 /**
  * @author Line
@@ -29,16 +30,53 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("链接报告IP:" + channel.localAddress().getHostString());
         System.out.println("链接报告Port:" + channel.localAddress().getPort());
         System.out.println("链接报告完毕");
-        //通知客户端链接建立成功
-        String str = "通知客户端链接建立成功" + " " + new Date() + " " + channel.localAddress().getHostString() + "\r\n";
-        ctx.writeAndFlush(MsgUtil.buildMsg(channel.id().toString(), str));
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 接收到消息类型：" + msg.getClass());
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 接收到消息内容：" + JSON.toJSONString(msg));
+        if (!(msg instanceof FileTransferProtocol)) return;
+        FileTransferProtocol fileTransferProtocol = (FileTransferProtocol) msg;
+        //0传输文件'请求'、1文件传输'指令'、2文件传输'数据'
+        switch (fileTransferProtocol.getTransferType()) {
+            case 0:
+                FileDescInfo fileDescInfo = (FileDescInfo) fileTransferProtocol.getTransferObj();
+
+                // 断点续传信息，实际应用中需要将断点续传信息保存到数据库中
+                FileBurstInstruct fileBurstInstructOld = CacheUtil.burstDataMap.get(fileDescInfo.getFileName());
+                if (null != fileBurstInstructOld) {
+                    // 判断是否完成断点续传
+                    if (fileBurstInstructOld.getStatus() == Constants.FileStatus.COMPLETE) {
+                        CacheUtil.burstDataMap.remove(fileDescInfo.getFileName());
+                    }
+                    // 传输完成删除断点信息
+                    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " bugstack虫洞栈服务端，接收客户端传输文件请求[断点续传]。" + JSON.toJSONString(fileBurstInstructOld));
+                    ctx.writeAndFlush(MsgUtil.buildTransferInstruct(fileBurstInstructOld));
+                    return;
+                }
+
+                // 发送信息
+                FileTransferProtocol sendFileTransferProtocol = MsgUtil.buildTransferInstruct(Constants.FileStatus.BEGIN, fileDescInfo.getFileUrl(), 0);
+                ctx.writeAndFlush(sendFileTransferProtocol);
+                System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " bugstack虫洞栈服务端，接收客户端传输文件请求。" + JSON.toJSONString(fileDescInfo));
+                break;
+            case 2:
+                FileBurstData fileBurstData = (FileBurstData) fileTransferProtocol.getTransferObj();
+                FileBurstInstruct fileBurstInstruct = FileUtil.writeFile("E://", fileBurstData);
+
+                // 保存断点续传信息
+                CacheUtil.burstDataMap.put(fileBurstData.getFileName(), fileBurstInstruct);
+
+                ctx.writeAndFlush(MsgUtil.buildTransferInstruct(fileBurstInstruct));
+                System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " bugstack虫洞栈服务端，接收客户端传输文件数据。" + JSON.toJSONString(fileBurstData));
+
+                // 传输完成删除断点信息
+                if (fileBurstInstruct.getStatus() == Constants.FileStatus.COMPLETE) {
+                    CacheUtil.burstDataMap.remove(fileBurstData.getFileName());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
