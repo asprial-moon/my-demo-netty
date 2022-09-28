@@ -1,33 +1,35 @@
-package cn.yong.demo.netty.web;
+package cn.yong.demo.netty;
 
 import cn.yong.demo.netty.server.NettyServer;
 import io.netty.channel.ChannelFuture;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 /**
  * @author Line
  * @desc
- * @date 2022/9/27
+ * @date 2022/9/28
  */
 @SpringBootApplication
-@ComponentScan("cn.yong.demo.netty")
-public class NettyApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
+    private Logger logger = LoggerFactory.getLogger(Application.class);
     @Value("${netty.host}")
     private String host;
     @Value("${netty.port}")
     private int port;
-    @Autowired
+    @Resource
     private NettyServer nettyServer;
 
     public static void main(String[] args) {
-        SpringApplication.run(NettyApplication.class, args);
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+        SpringApplication.run(Application.class, args);
     }
 
     @Override

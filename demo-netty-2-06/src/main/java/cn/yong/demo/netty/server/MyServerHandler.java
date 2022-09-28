@@ -1,24 +1,16 @@
 package cn.yong.demo.netty.server;
 
-import cn.yong.demo.netty.domain.ClientMsgProtocol;
-import cn.yong.demo.netty.util.ChannelHandler;
-import cn.yong.demo.netty.util.MsgUtil;
+import cn.yong.demo.netty.domain.TransportProtocol;
+import cn.yong.demo.netty.domain.User;
+import cn.yong.demo.netty.service.UserService;
 import com.alibaba.fastjson.JSON;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.websocketx.*;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,9 +20,11 @@ import java.util.Date;
  * @desc
  * @date 2022/9/20
  */
+@Service("myServerHandler")
 public class MyServerHandler extends ChannelInboundHandlerAdapter {
     private Logger logger = LoggerFactory.getLogger(MyServerHandler.class);
-    private WebSocketServerHandshaker handshaker;
+    @Autowired
+    private UserService userService;
     /**
      * 当客户端主动链接服务端的链接后，这个通道就是活跃的了。也就是客户端与服务端建立了通信通道并且可以传输数据
      */
@@ -42,7 +36,6 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         logger.info("链接报告IP:{}", channel.localAddress().getHostString());
         logger.info("链接报告Port:{}", channel.localAddress().getPort());
         logger.info("链接报告完毕");
-        ChannelHandler.channelGroup.add(ctx.channel());
     }
 
     /**
@@ -51,76 +44,16 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("客户端断开链接" + ctx.channel().localAddress().toString());
-        ChannelHandler.channelGroup.remove(ctx.channel());
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // http
-        if (msg instanceof FullHttpRequest) {
-            FullHttpRequest httpRequest = (FullHttpRequest) msg;
-            if (!httpRequest.decoderResult().isSuccess()) {
-                DefaultFullHttpResponse httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST);
+        // 接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
+        logger.info(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 服务端接收到消息：" + JSON.toJSONString(msg));
+        // 接收数据写入到Elasticsearch
+        TransportProtocol transportProtocol = (TransportProtocol) msg;
 
-                // 返回应答给客户端
-                if (httpResponse.status().code() != 200) {
-                    ByteBuf buf = Unpooled.copiedBuffer(httpResponse.status().toString(), CharsetUtil.UTF_8);
-                    httpResponse.content().writeBytes(buf);
-                    buf.release();
-                }
-
-                // 如果是非keep-Alive. 关闭连接
-                ChannelFuture future = ctx.channel().writeAndFlush(httpResponse);
-                if (httpResponse.status().code() != 200) {
-                    future.addListener(ChannelFutureListener.CLOSE);
-                }
-                return;
-            }
-
-            WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws:/" + ctx.channel() + "/websocket", null, false);
-            handshaker = wsFactory.newHandshaker(httpRequest);
-
-            if (null == handshaker) {
-                WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
-            } else {
-                handshaker.handshake(ctx.channel(), httpRequest);
-            }
-            return;
-        }
-
-        // ws
-        if (msg instanceof WebSocketFrame) {
-            WebSocketFrame webSocketFrame = (WebSocketFrame) msg;
-            // 关闭请求
-            if (webSocketFrame instanceof CloseWebSocketFrame) {
-                handshaker.close(ctx.channel(), ((CloseWebSocketFrame) webSocketFrame).retain());
-                return;
-            }
-            // ping请求
-            if (webSocketFrame instanceof PingWebSocketFrame) {
-                ctx.channel().write(new PongWebSocketFrame(webSocketFrame.content().retain()));
-                return;
-            }
-            // 只支持文本格式，不支持二进制文本
-            if (!(webSocketFrame instanceof TextWebSocketFrame)) {
-                throw new Exception("仅支持文本格式");
-            }
-
-            String request = ((TextWebSocketFrame) webSocketFrame).text();
-            logger.info("服务端收到：{}", request);
-
-            ClientMsgProtocol clientMsgProtocol = JSON.parseObject(request, ClientMsgProtocol.class);
-            // 1请求个人信息
-            if (1 == clientMsgProtocol.getType()) {
-                ctx.channel().writeAndFlush(MsgUtil.buildMsgOwner(ctx.channel().id().toString()));
-                return;
-            }
-            // 群发消息
-            if (2 == clientMsgProtocol.getType()) {
-                TextWebSocketFrame textWebSocketFrame = MsgUtil.buildMsgAll(ctx.channel().id().toString(), clientMsgProtocol.getMsgInfo());
-                ChannelHandler.channelGroup.writeAndFlush(textWebSocketFrame);
-            }
-        }
+        userService.save((User) transportProtocol.getObj());
     }
 
     /**

@@ -17,9 +17,9 @@ public class NettyController {
     @Resource
     private NettyServer nettyServer;
 
-    @RequestMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("name", "xiaohao");
-        return "index";
+    @RequestMapping("/localAddress")
+    public String localAddress() {
+        return "nettyServer localAddress " + nettyServer.getChannel().localAddress();
     }
+
 }
