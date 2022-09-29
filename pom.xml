@@ -35,6 +35,7 @@
         <module>demo-netty-2-04</module>
         <module>demo-netty-2-05</module>
         <module>demo-netty-2-06</module>
+        <module>demo-netty-2-07</module>
     </modules>
 
     <dependencies>
