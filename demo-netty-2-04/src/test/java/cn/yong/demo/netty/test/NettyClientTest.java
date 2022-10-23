@@ -16,7 +16,7 @@ public class NettyClientTest {
     public static void main(String[] args) {
         ChannelFuture channelFuture = new NettyClient().connect("127.0.0.1", 7397);
 
-        File file = new File("C:\\Users\\line\\Desktop\\测试传输文件.rar");
+        File file = new File("D:\\RECON_FILE_10000016247_01042022\\JOICOM_CORPORATION_10000016247_MP_01042022_reconciliationreport.zip");
         FileTransferProtocol fileTransferProtocol = MsgUtil.buildRequestTransferFile(file.getAbsolutePath(), file.getName(), file.length());
 
         // 发送信息
