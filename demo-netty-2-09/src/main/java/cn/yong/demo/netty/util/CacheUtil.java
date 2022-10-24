@@ -1,8 +1,9 @@
 package cn.yong.demo.netty.util;
 
+import cn.yong.demo.netty.domain.ServerInfo;
 import cn.yong.demo.netty.server.NettyServer;
 import io.netty.channel.Channel;
-import org.apache.catalina.util.ServerInfo;
+
 
 import java.util.Collections;
 import java.util.HashMap;
