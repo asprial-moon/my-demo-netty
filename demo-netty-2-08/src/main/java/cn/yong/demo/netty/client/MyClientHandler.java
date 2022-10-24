@@ -22,15 +22,11 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         SocketChannel channel = (SocketChannel) ctx.channel();
-        System.out.println("链接报告开始");
-        System.out.println("链接报告信息：本客户端链接到服务端。channelId：" + channel.id());
-        System.out.println("链接报告IP:" + channel.localAddress().getHostString());
-        System.out.println("链接报告Port:" + channel.localAddress().getPort());
-        System.out.println("链接报告完毕");
+        System.out.println("链接报告信息：本客户端链接到服务端。channelId：" + channel.id() + ", 链接报告IP:" + channel.localAddress().getHostString() + ", 链接报告Port:" + channel.localAddress().getPort());
     }
 
     /**
-     * 客户端主动端口服务端的链接后，这个通道就是不活跃的。也就是说客户端与服务端的关闭了通信通道并且不可以传输数据
+     * 客户端主动断开服务端的链接后，这个通道就是不活跃的。也就是说客户端与服务端的关闭了通信通道并且不可以传输数据
      * @param ctx 通道处理程序上下文
      * @throws Exception 异常
      */
@@ -41,7 +37,7 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
         new Thread(() -> {
             try {
                 new NettyClient().connect("127.0.0.1", 7397);
-                System.out.println("netty client start done.");
+                System.out.println("netty client start done. ===============================================================================");
                 Thread.sleep(500);
             } catch (Exception e) {
                 System.out.println("netty client start error on reconnect...");

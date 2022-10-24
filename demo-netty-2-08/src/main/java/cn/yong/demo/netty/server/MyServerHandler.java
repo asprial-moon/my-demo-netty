@@ -44,13 +44,9 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         SocketChannel channel = (SocketChannel) ctx.channel();
-        System.out.println("链接报告开始");
-        System.out.println("链接报告信息：有一客户端链接到本服务端");
-        System.out.println("链接报告IP:" + channel.localAddress().getHostString());
-        System.out.println("链接报告Port:" + channel.localAddress().getPort());
-        System.out.println("链接报告完毕");
+        System.out.println("链接报告信息：有一客户端链接到本服务端, 链接报告IP:" + channel.localAddress().getHostString() + ", 链接报告Port:" + channel.localAddress().getPort());
         // 通过客户端链接建立成功
-        String str = "通知客户端链接建立成功" + " " + new Date() + " " + channel.localAddress().getHostString() + "\r\n";
+        String str = "通知客户端链接建立成功" + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " " + channel.localAddress().getHostString() + "\r\n";
         ctx.writeAndFlush(str);
     }
 
@@ -69,7 +65,7 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         //接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 接收到消息：" + msg);
         //通知客户端链消息发送成功
-        String str = "服务端收到：" + new Date() + " " + msg + "\r\n";
+        String str = "服务端收到：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " " + msg + "\r\n";
         ctx.writeAndFlush(str);
     }
 
