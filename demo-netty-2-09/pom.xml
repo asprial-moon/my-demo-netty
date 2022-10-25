@@ -5,18 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>my-demo-netty</artifactId>
+        <groupId>cn.yong</groupId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>demo-netty-2-09</artifactId>
 
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
         <protostuff.version>1.0.10</protostuff.version>
         <objenesis.version>2.4</objenesis.version>
     </properties>

@@ -32,11 +32,11 @@ public class ReceiverConfig {
 
     /**
      * 消息监听适配器
-     * @param msgAgreementReceiver
+     * @param receiver
      * @return
      */
     @Bean
-    public MessageListenerAdapter msgAgreementListenerAdapter(MsgAgreementReceiver msgAgreementReceiver) {
-        return new MessageListenerAdapter(msgAgreementReceiver, "receiverMessage");
+    public MessageListenerAdapter msgAgreementListenerAdapter(MsgAgreementReceiver receiver) {
+        return new MessageListenerAdapter(receiver, "receiverMessage");
     }
 }

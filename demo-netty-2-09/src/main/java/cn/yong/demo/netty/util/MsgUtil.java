@@ -19,7 +19,7 @@ public class MsgUtil {
     }
 
     public static String obj2Json(MsgAgreement msgAgreement) {
-        return JSON.toJSONString(msgAgreement + "\r\n");
+        return JSON.toJSONString(msgAgreement) + "\r\n";
     }
 
 }

@@ -7,6 +7,6 @@ package cn.yong.demo.netty.redis;
  */
 public abstract class AbstractReceiver {
 
-    public abstract void receiveMessage(Object message);
+    public abstract void receiverMessage(Object message);
 
 }

@@ -43,7 +43,7 @@ public class NettyServer implements Callable<Channel> {
             b.group(parentGroup, childGroup)
                     .channel(NioServerSocketChannel.class)  // 非阻塞模式
                     .option(ChannelOption.SO_BACKLOG, 128)
-                    .childHandler(new MyServerHandler(extServerService));
+                    .childHandler(new MyChannelInitializer(extServerService));
             channelFuture = b.bind(address).syncUninterruptibly();
             this.channel = channelFuture.channel();
         } catch (Exception e) {

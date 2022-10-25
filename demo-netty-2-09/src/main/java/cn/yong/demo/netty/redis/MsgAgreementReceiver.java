@@ -21,7 +21,7 @@ public class MsgAgreementReceiver extends AbstractReceiver {
     private Logger logger = LoggerFactory.getLogger(MsgAgreementReceiver.class);
 
     @Override
-    public void receiveMessage(Object message) {
+    public void receiverMessage(Object message) {
         logger.info("接收到PUSH消息：{}", message);
         MsgAgreement msgAgreement = JSON.parseObject(message.toString(), MsgAgreement.class);
         String toChannelId = msgAgreement.getToChannelId();
